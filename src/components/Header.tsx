@@ -47,8 +47,8 @@ const Header = () => {
             <Link to={'/'} className="font-semibold text-xl p-5 hover:text-[#cf2e2e]">Others</Link>
          </div>
          <div>
-         <Link  to={'/'} className="btn log-btn">Sign In</Link>
-         <Link to={'/'} className="btn reg-btn">Sign Up</Link>
+         <Link  to={'/signin'} className="btn log-btn">Sign In</Link>
+         <Link to={'/signup'} className="btn reg-btn">Sign Up</Link>
          </div>
       </div>
     </header>
