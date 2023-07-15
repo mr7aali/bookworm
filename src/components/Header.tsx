@@ -1,12 +1,19 @@
-import { AiOutlineQuestionCircle ,AiOutlineHeart,AiOutlineShoppingCart} from "react-icons/ai";
-import { BsPhoneVibrate ,BsArrowLeftRight} from "react-icons/bs";
+import {
+  AiOutlineQuestionCircle,
+  AiOutlineHeart,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
+import { BsPhoneVibrate, BsArrowLeftRight } from "react-icons/bs";
 import { MdOutlineAddLocationAlt } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { HiMenuAlt2 } from "react-icons/hi";
-import logo from './../assets/logo.jpg';
-import { Link} from "react-router-dom";
-import './styles/Header.css'
+import logo from "./../assets/logo.jpg";
+import { Link } from "react-router-dom";
+import "./styles/Header.css";
+import { useAppSelector } from "../redux/hook";
 const Header = () => {
+  const { user } = useAppSelector((state) => state.user);
+  console.log(user?.email);
   return (
     <header className="border-bottom">
       <div className="topbar border-bottom ">
@@ -27,29 +34,88 @@ const Header = () => {
           </ul>
           <div className="flex items-center">
             <ul className="flex text-[20px] items-center ">
-              <li className="mx-5 cursor-pointer"> <MdOutlineAddLocationAlt/></li>
-              <li className="mx-5 cursor-pointer"><BsArrowLeftRight/></li>
-              <li className="mx-5 cursor-pointer"><AiOutlineHeart/></li>
-              <li className="mx-5 cursor-pointer"><FiUsers/></li>
-              <li className="mx-5 cursor-pointer"><AiOutlineShoppingCart/></li>
+              <li className="mx-5 cursor-pointer">
+                {" "}
+                <MdOutlineAddLocationAlt />
+              </li>
+              <li className="mx-5 cursor-pointer">
+                <BsArrowLeftRight />
+              </li>
+              <li className="mx-5 cursor-pointer">
+                <AiOutlineHeart />
+              </li>
+              <li className="mx-5 cursor-pointer">
+                <FiUsers />
+              </li>
+              <li className="mx-5 cursor-pointer">
+                <AiOutlineShoppingCart />
+              </li>
             </ul>
           </div>
         </div>
       </div>
       <div className="container mx-auto flex justify-between items-center ">
-         <div className="flex items-center text-[#161619]  ">
-            <Link to={'/'} className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"><HiMenuAlt2/></Link>
-            <Link to={'/'} className="font-semibold text-xl p-0 hover:text-[#cf2e2e]"> <img src={logo} className="h-[50px]" alt="" /></Link>
-            <Link to={'/'} className="font-semibold text-xl p-5 hover:text-[#cf2e2e]">Home</Link>
-            <Link to={'/'} className="font-semibold text-xl p-5 hover:text-[#cf2e2e]">Categories</Link>
-            <Link to={'/'} className="font-semibold text-xl p-5 hover:text-[#cf2e2e]">All Books</Link>
-            <Link to={'/'} className="font-semibold text-xl p-5 hover:text-[#cf2e2e]">Blog</Link>
-            <Link to={'/'} className="font-semibold text-xl p-5 hover:text-[#cf2e2e]">Others</Link>
-         </div>
-         <div>
-         <Link  to={'/signin'} className="btn log-btn">Sign In</Link>
-         <Link to={'/signup'} className="btn reg-btn">Sign Up</Link>
-         </div>
+        <div className="flex items-center text-[#161619]  ">
+          <Link
+            to={"/"}
+            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+          >
+            <HiMenuAlt2 />
+          </Link>
+          <Link
+            to={"/"}
+            className="font-semibold text-xl p-0 hover:text-[#cf2e2e]"
+          >
+            {" "}
+            <img src={logo} className="h-[50px]" alt="" />
+          </Link>
+          <Link
+            to={"/"}
+            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+          >
+            Home
+          </Link>
+          <Link
+            to={"/"}
+            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+          >
+            Categories
+          </Link>
+          <Link
+            to={"/"}
+            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+          >
+            All Books
+          </Link>
+          <Link
+            to={"/"}
+            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+          >
+            Blog
+          </Link>
+          <Link
+            to={"/"}
+            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+          >
+            Others
+          </Link>
+        </div>
+        <div>
+          {user?.email ? (
+            <Link to={"/signup"} className="btn reg-btn cursor-pointer">
+              Log Out
+            </Link>
+          ) : (
+            <>
+              <Link to={"/signin"} className="btn log-btn cursor-pointer">
+                Sign In
+              </Link>
+              <Link to={"/signup"} className="btn reg-btn cursor-pointer">
+                Sign Up
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

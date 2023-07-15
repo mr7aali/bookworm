@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useForm } from "react-hook-form";
+import { useAppDispatch } from "../redux/hook";
+import { createUser } from "../redux/features/user/userSlice";
 
-type ISignUp={
-  name?:string;
-  email?:string;
-  passwoard?:string;
-}
+type ISignUp = {
+  name?: string;
+  email?: string;
+  password?: string;
+};
 export default function SignUp() {
-  const { reset, handleSubmit ,register} = useForm();
-  const handleSignUp = (data:ISignUp) => {
-    console.log(data);
+  const { reset, handleSubmit, register } = useForm();
+  const dispatch = useAppDispatch();
+  const handleSignUp = (data: ISignUp) => {
+    // console.log(data.passwoard);
+     // eslint-disable-next-line @typescript-eslint/no-floating-promises
+     dispatch(createUser({ email: data.email as string, password: data.password as string}));
   };
   return (
     <>
@@ -24,7 +29,12 @@ export default function SignUp() {
             <p className="text-sm mt-4 text-[#002D74]">
               If you have not an account, please login
             </p>
-            <form onSubmit={handleSubmit(handleSignUp)} className="mt-6" action="#" method="POST">
+            <form
+              onSubmit={handleSubmit(handleSignUp)}
+              className="mt-6"
+              action="#"
+              method="POST"
+            >
               <div>
                 <label className="block text-gray-700">Name</label>
                 <input
@@ -43,7 +53,6 @@ export default function SignUp() {
                 <input
                   type="email"
                   {...register("email")}
-              
                   id=""
                   placeholder="Enter Email Address"
                   className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
@@ -142,7 +151,7 @@ export default function SignUp() {
             />
           </div>
         </div>
-      </section>  
+      </section>
     </>
   );
 }

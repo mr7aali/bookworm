@@ -1,14 +1,25 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
+
 import { useForm } from "react-hook-form";
+import { useAppDispatch } from "../redux/hook";
+import {  loginUser } from "../redux/features/user/userSlice";
 type ISignIn = {
-//   name: string;
+  //   name: string;
   email?: string;
-  passwoard?: string;
+  password?: string;
 };
 const SignIn = () => {
   const { reset, handleSubmit, register } = useForm();
-  const handleSignIn = (data:ISignIn) => {
-    console.log(data);
+  const dispatch = useAppDispatch();
+  const handleSignIn = (data: ISignIn) => {
+    console.log(data.email, data.password);
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    dispatch(
+      loginUser({
+        email: data.email as string,
+        password: data.password as string,
+      })
+    );
+    reset();
   };
   return (
     <div
