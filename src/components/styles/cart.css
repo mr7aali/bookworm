@@ -1,0 +1,12 @@
+.cart-container {
+    /* height: 325px; */
+    /* width: 184px; */
+    /* background: pink; */
+
+    /* border-right: 1px solid #eae8e4;
+    border-bottom: 1px solid #eae8e4; */
+    border: 1px solid #eae8e4;
+    transition: all .2s ease-in-out;
+
+    margin-bottom: 30px;
+}

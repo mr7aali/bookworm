@@ -10,10 +10,20 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import logo from "./../assets/logo.jpg";
 import { Link } from "react-router-dom";
 import "./styles/Header.css";
-import { useAppSelector } from "../redux/hook";
+import { useAppDispatch, useAppSelector } from "../redux/hook";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebase.config";
+import { setUser } from "../redux/features/user/userSlice";
+
 const Header = () => {
   const { user } = useAppSelector((state) => state.user);
-  console.log(user?.email);
+  const dispatch = useAppDispatch();
+  const singOUT = () => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    signOut(auth).then(() => {
+      dispatch(setUser(null));
+    });
+  };
   return (
     <header className="border-bottom">
       <div className="topbar border-bottom ">
@@ -102,7 +112,11 @@ const Header = () => {
         </div>
         <div>
           {user?.email ? (
-            <Link to={"/signup"} className="btn reg-btn cursor-pointer">
+            <Link
+              onClick={singOUT}
+              to={"/signup"}
+              className="btn reg-btn cursor-pointer"
+            >
               Log Out
             </Link>
           ) : (

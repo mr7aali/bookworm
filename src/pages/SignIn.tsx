@@ -1,17 +1,20 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../redux/hook";
-import {  loginUser } from "../redux/features/user/userSlice";
+import { loginUser } from "../redux/features/user/userSlice";
+import { useNavigate } from "react-router-dom";
+
 type ISignIn = {
-  //   name: string;
   email?: string;
   password?: string;
 };
 const SignIn = () => {
+  const navigate = useNavigate();
+  // const email = useAppSelector((state) => state?.user?.user?.email);
   const { reset, handleSubmit, register } = useForm();
   const dispatch = useAppDispatch();
   const handleSignIn = (data: ISignIn) => {
-    console.log(data.email, data.password);
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     dispatch(
       loginUser({
@@ -19,8 +22,12 @@ const SignIn = () => {
         password: data.password as string,
       })
     );
+
+    navigate("/");
+
     reset();
   };
+
   return (
     <div
       style={{

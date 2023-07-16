@@ -1,11 +1,28 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { onAuthStateChanged } from "firebase/auth";
 import "./App.css";
 import MainLayout from "./layouts/MainLayout";
+import { useAppDispatch } from "./redux/hook";
+import { auth } from "./firebase/firebase.config";
+import { setLoading, setUser } from "./redux/features/user/userSlice";
+import { useEffect } from "react";
+
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setLoading(true));
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(setUser(user.email));
+        dispatch(setLoading(false));
+      } else {
+        dispatch(setLoading(false));
+      }
+    });
+  }, [dispatch]);
 
   return (
     <>
