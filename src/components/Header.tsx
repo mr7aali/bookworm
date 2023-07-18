@@ -86,10 +86,10 @@ const Header = () => {
             Home
           </Link>
           <Link
-            to={"/"}
+            to={"/addbook"}
             className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
           >
-            Categories
+           Add Book
           </Link>
           <Link
             to={"/allbook"}

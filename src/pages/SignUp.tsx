@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../redux/hook";
-import { createUser } from "../redux/features/user/userSlice";
+import { createUser, loginWithGoogle } from "../redux/features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 type ISignUp = {
   name?: string;
@@ -11,10 +12,20 @@ type ISignUp = {
 export default function SignUp() {
   const { reset, handleSubmit, register } = useForm();
   const dispatch = useAppDispatch();
-  const handleSignUp = (data: ISignUp) => {
+  const navigate = useNavigate();
+  const handleSignUp = async (data: ISignUp) => {
     // console.log(data.passwoard);
-     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-     dispatch(createUser({ email: data.email as string, password: data.password as string}));
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    const r = await dispatch(
+      createUser({
+        email: data.email as string,
+        password: data.password as string,
+      })
+    );
+    if (r.payload) {
+      navigate("/");
+    }
+    reset();
   };
   return (
     <>
@@ -100,7 +111,13 @@ export default function SignUp() {
               <hr className="border-gray-500" />
             </div>
 
-            <button className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 ">
+            <button
+              onClick={async () => {
+                await dispatch(loginWithGoogle());
+                navigate("/");
+              }}
+              className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 "
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xlinkHref="http://www.w3.org/1999/xlink"

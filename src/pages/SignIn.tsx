@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../redux/hook";
-import { loginUser } from "../redux/features/user/userSlice";
+import { loginUser, loginWithGoogle } from "../redux/features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
 type ISignIn = {
@@ -14,16 +14,18 @@ const SignIn = () => {
   // const email = useAppSelector((state) => state?.user?.user?.email);
   const { reset, handleSubmit, register } = useForm();
   const dispatch = useAppDispatch();
-  const handleSignIn = (data: ISignIn) => {
+  const handleSignIn = async (data: ISignIn) => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    dispatch(
+    const result = await dispatch(
       loginUser({
         email: data.email as string,
         password: data.password as string,
       })
     );
 
-    navigate("/");
+    if(result.payload){
+      navigate("/");
+    }
 
     reset();
   };
@@ -110,7 +112,13 @@ const SignIn = () => {
               <hr className="border-gray-500" />
             </div>
 
-            <button className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 ">
+            <button
+              onClick={async () => {
+                await dispatch(loginWithGoogle());
+                navigate("/");
+              }}
+              className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 "
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xlinkHref="http://www.w3.org/1999/xlink"

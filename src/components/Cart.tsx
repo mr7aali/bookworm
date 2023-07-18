@@ -25,14 +25,14 @@ const Cart = ({ book }: IProps) => {
         <div className="p-5 w-[250px]">
           <div>
             <p className="text-[#f75454] uppercase text-[13px] mt-[-10px] mb-1">
-              {book.genre}
+              {book?.genre}
             </p>
           </div>
           <h2 style={{ lineHeight: "1" }} className="text-lg">
-            {book.title}
+            {book?.title}
           </h2>
           <p className="text-gray-700 hover:text-[#f75454] cursor-pointer mt-2">
-            {book.author}
+            {book?.author}
           </p>
           <div className="flex items-center justify-between">
             <h3 className="text-xl">$4.72</h3>

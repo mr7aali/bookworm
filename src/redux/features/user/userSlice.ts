@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../../firebase/firebase.config';
 
 interface IUserState {
@@ -32,6 +32,13 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ email, pass
 
     return data.user.email;
 });
+export const loginWithGoogle = createAsyncThunk("user/loginWithGoogle", async () => {
+
+    const provider = new GoogleAuthProvider();
+    const data = await signInWithPopup(auth, provider);
+
+    return data.user.email;
+});
 
 
 const userSlice = createSlice({
@@ -46,6 +53,8 @@ const userSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+
+        // ! create User
         builder.addCase(createUser.pending, (state) => {
             state.isLoading = true;
             state.error = null;
@@ -62,7 +71,7 @@ const userSlice = createSlice({
             state.error = action.error.message;
         });
 
-
+        // ! login User
         builder.addCase(loginUser.pending, (state) => {
             state.isLoading = true;
             state.error = null;
@@ -80,9 +89,26 @@ const userSlice = createSlice({
         });
 
 
+        // ! loginWithGoogle
+        builder.addCase(loginWithGoogle.pending, (state) => {
+            state.isLoading = true;
+            state.error = null;
+            state.isError = false;
+        }).addCase(loginWithGoogle.fulfilled, (state, action) => {
+            state.user.email = action.payload;
+            state.isLoading = false;
+            state.error = null;
+            state.isError = false;
+        }).addCase(loginWithGoogle.rejected, (state, action) => {
+            state.user.email = null;
+            state.isLoading = false;
+            state.isError = true;
+            state.error = action.error.message;
+        });
+
     }
 });
 
 
-export const { setUser,setLoading } = userSlice.actions;
+export const { setUser, setLoading } = userSlice.actions;
 export default userSlice.reducer;

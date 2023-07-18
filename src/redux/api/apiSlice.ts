@@ -6,9 +6,12 @@ export const api = createApi({
     endpoints: (builder) => ({
         getAllBooks: builder.query({
             query: () => "/all-book"
+        }),
+        getBooks: builder.query({
+            query: () => "/get-book"
         })
     })
 });
 
 
-export const { useGetAllBooksQuery } = api;
+export const { useGetAllBooksQuery,useGetBooksQuery } = api;
