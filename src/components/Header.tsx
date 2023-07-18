@@ -92,7 +92,7 @@ const Header = () => {
             Categories
           </Link>
           <Link
-            to={"/"}
+            to={"/allbook"}
             className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
           >
             All Books
