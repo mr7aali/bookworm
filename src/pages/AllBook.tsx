@@ -1,6 +1,25 @@
 import Cart from "../components/Cart";
+import { useGetAllBooksQuery } from "../redux/api/apiSlice";
+import { IBook } from "../types/book";
 
 const AllBook = () => {
+  type MyData = {
+    data: IBook[];
+    // Other properties specific to your data structure
+  };
+  type MyQueryResult = {
+    data: MyData;
+    isLoading: boolean;
+    isError: boolean;
+
+    // Other properties returned by your specific hook
+  };
+  const { data, isLoading, isError } = useGetAllBooksQuery(
+    undefined
+  ) as MyQueryResult;
+
+  console.log(data?.data, isLoading, isError);
+
   return (
     <div>
       <div className="container mx-auto">
@@ -14,16 +33,12 @@ const AllBook = () => {
             //  style={{ border: "1px solid red" }}
             className="featured-card-container"
           >
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
+            {data?.data?.map((b: IBook) => (
+              <Cart 
+              key={b._id}
+               book={b} />
+            ))}
+          
           </div>
         </div>
       </div>
