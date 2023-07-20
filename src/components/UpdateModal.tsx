@@ -1,13 +1,12 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { useAppSelector } from "../redux/hook";
 import { useForm } from "react-hook-form";
 import { IBook, IBookPostData } from "../types/book";
 import { useUpdateBookMutation } from "../redux/api/apiSlice";
-
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 const style = {
   position: "absolute",
   top: "50%",
@@ -22,19 +21,40 @@ const style = {
 interface ChildComponentProps {
   open: boolean;
   book: IBook;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const UpdateModal: React.FC<ChildComponentProps> = ({ open, book ,setOpen}) => {
-  const { reset, handleSubmit, register } = useForm<IBookPostData>();
 
-  const [updateBook, option] = useUpdateBookMutation();
+type IRsesponse = {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  data: IBook | null;
+};
+const UpdateModal: React.FC<ChildComponentProps> = ({
+  open,
+  book,
+  setOpen,
+}) => {
+  const {  handleSubmit, register } = useForm<IBookPostData>();
+
+  const [updateBook] = useUpdateBookMutation();
   const onSubmit = async (data: IBookPostData) => {
-    const result = await updateBook({ id: book?._id, data: data });
+    const result:
+      | {
+          data: IRsesponse;
+        }
+      | {
+          error: FetchBaseQueryError | SerializedError;
+        } = await updateBook({ id: book?._id, data: data });
 
-    // console.log(option);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    console.log(result?.data?.success);
-    setOpen(!open)
+    if ("data" in result) {
+      if (result.data.success) {
+        toast.success(result.data.message);
+        return;
+      }
+    }
+    toast.success("Try again");
+    setOpen(!open);
   };
 
   return (
@@ -138,7 +158,7 @@ const UpdateModal: React.FC<ChildComponentProps> = ({ open, book ,setOpen}) => {
                                   stroke="currentColor"
                                   stroke-width="2"
                                   stroke-linecap="round"
-                                  stroke-linejoin="round"
+                                  strokeLinejoin="round"
                                 >
                                   <line x1="18" y1="6" x2="6" y2="18"></line>
                                   <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -156,7 +176,7 @@ const UpdateModal: React.FC<ChildComponentProps> = ({ open, book ,setOpen}) => {
                                   stroke="currentColor"
                                   stroke-width="2"
                                   stroke-linecap="round"
-                                  stroke-linejoin="round"
+                                  strokeLinejoin="round"
                                 >
                                   <polyline points="18 15 12 9 6 15"></polyline>
                                 </svg>

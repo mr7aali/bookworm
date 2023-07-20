@@ -14,7 +14,7 @@ const AllBook = () => {
 
     // Other properties returned by your specific hook
   };
-  const { data, isLoading, isError } = useGetAllBooksQuery(
+  const { data } = useGetAllBooksQuery(
     undefined
   ) as MyQueryResult;
 

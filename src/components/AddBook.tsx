@@ -8,16 +8,16 @@ const AddBook = () => {
   const { reset, handleSubmit, register } = useForm<IBookPostData>();
   const email = useAppSelector((state) => state.user.user.email);
 
-  const [postBook, option] = usePostBookMutation();
+  const [postBook] = usePostBookMutation();
 
   const onSubmit = async (data: IBookPostData) => {
     const bookData = { ...data, email };
     // data.email = email
     // console.log(bookData);
     await postBook(bookData as IBookPostData);
-    // reset();
+    reset();
   };
-  console.log(option);
+ 
   return (
     <div>
       {/* <!-- component --> */}
@@ -105,7 +105,7 @@ const AddBook = () => {
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinejoin="round"
                           >
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -123,7 +123,7 @@ const AddBook = () => {
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinejoin="round"
                           >
                             <polyline points="18 15 12 9 6 15"></polyline>
                           </svg>

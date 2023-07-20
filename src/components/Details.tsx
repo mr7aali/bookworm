@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import { useAppSelector } from "../redux/hook";
 import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
-import React, { useState } from "react";
+import  { useState } from "react";
 
 type MyData = {
   data: IBook;
@@ -36,21 +36,21 @@ export default function Details() {
   const path = location.pathname;
   const id = path.split("/")[2];
   const email = useAppSelector((state) => state.user.user.email);
-  const { data, isLoading, isError } = useGetSingleBookQuery(
+  const { data } = useGetSingleBookQuery(
     id
   ) as MyQueryResult;
   const option = {
     id: id,
     email: email as string,
   };
-  const [deletePost, others] = useDeleteBookMutation();
+  const [deletePost] = useDeleteBookMutation();
 
   const handleDelete = async () => {
     const r = await deletePost(option);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    console.log(r?.data?.message);
+  
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (!r?.data?.success) {
+    if ( ("data" in r) && !r?.data?.success) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       toast.error(r?.data?.message);
       return;

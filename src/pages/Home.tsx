@@ -15,7 +15,7 @@ const Home = () => {
 
     // Other properties returned by your specific hook
   };
-  const { data, isLoading, isError } = useGetBooksQuery(
+  const { data } = useGetBooksQuery(
     undefined
   ) as MyQueryResult;
  
