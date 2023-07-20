@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IBookPostData } from '../../types/book';
 
 export const api = createApi({
     reducerPath: 'api',
@@ -9,9 +10,24 @@ export const api = createApi({
         }),
         getBooks: builder.query({
             query: () => "/get-book"
+        }),
+        postBook: builder.mutation({
+            query: (data: IBookPostData) => ({
+                url: "/create-book",
+                method: "POST",
+                body: data
+            })
+        }),
+        getSingleBook: builder.query({
+            query: (id:string) => `/get-book/${id}`
         })
     })
 });
 
 
-export const { useGetAllBooksQuery,useGetBooksQuery } = api;
+export const {
+    useGetAllBooksQuery,
+    usePostBookMutation,
+    useGetBooksQuery,
+    useGetSingleBookQuery
+} = api;

@@ -18,7 +18,7 @@ const Home = () => {
   const { data, isLoading, isError } = useGetBooksQuery(
     undefined
   ) as MyQueryResult;
-  console.log(data?.data, isError, isLoading);
+ 
   return (
     <div className="container mx-auto mb-20">
       <div className="flex">
@@ -32,7 +32,7 @@ const Home = () => {
           className="featured-card-container"
         >
           {data?.data?.map((b: IBook) => (
-            <Cart book={b} />
+            <Cart key={b._id} book={b} />
           ))}
         </div>
       </div>

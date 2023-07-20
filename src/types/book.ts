@@ -3,10 +3,21 @@ export type IBook = {
     author: string;
     genre: string
     publicationDate: string;
-    reviews: [string]
+    reviews: [string];
     title: string;
-
+    image:string;
     createdAt: string;
     updatedAt: string;
-   
+
+
+}
+
+export type IBookPostData = {
+    title: string;
+    author: string;
+    genre: string;
+    publicationDate: string;
+    reviews?: string;
+    email: string;
+    image: string;
 }

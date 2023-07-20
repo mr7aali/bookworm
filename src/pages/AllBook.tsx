@@ -18,7 +18,7 @@ const AllBook = () => {
     undefined
   ) as MyQueryResult;
 
-  console.log(data?.data, isLoading, isError);
+  
 
   return (
     <div>
