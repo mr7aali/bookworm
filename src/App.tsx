@@ -6,7 +6,6 @@ import { auth } from "./firebase/firebase.config";
 import { setLoading, setUser } from "./redux/features/user/userSlice";
 import { useEffect } from "react";
 
-
 function App() {
   // const [count, setCount] = useState(0);
 
@@ -26,6 +25,7 @@ function App() {
 
   return (
     <>
+      ;
       <MainLayout />
     </>
   );

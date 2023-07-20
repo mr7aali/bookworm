@@ -1,5 +1,9 @@
-import { useLocation } from "react-router-dom";
-import { useGetSingleBookQuery } from "../redux/api/apiSlice";
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useDeleteBookMutation,
+  useGetSingleBookQuery,
+} from "../redux/api/apiSlice";
 import { IBook } from "../types/book";
 
 import Card from "@mui/material/Card";
@@ -8,6 +12,8 @@ import CardContent from "@mui/material/CardContent";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useAppSelector } from "../redux/hook";
+import { toast } from "react-toastify";
 
 type MyData = {
   data: IBook;
@@ -19,14 +25,34 @@ type MyQueryResult = {
 };
 
 export default function Details() {
+  const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
   const id = path.split("/")[2];
-
+  const email = useAppSelector((state) => state.user.user.email);
   const { data, isLoading, isError } = useGetSingleBookQuery(
     id
   ) as MyQueryResult;
-  console.log(data?.data?.image);
+  const option = {
+    id: id,
+    email: email as string,
+  };
+  const [deletePost, others] = useDeleteBookMutation();
+
+  const handleDelete = async () => {
+    const r = await deletePost(option);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    console.log(r?.data?.message);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if (!r?.data?.success) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      toast.error(r?.data?.message);
+      return;
+    }
+    toast.success("Book deleted successfully");
+    navigate("/");
+  };
+
   return (
     <div className="container mx-auto">
       <Card
@@ -67,12 +93,26 @@ export default function Details() {
             </p>
             <p>Genre: {data?.data?.genre}</p>
             <p>Publication Date: {data?.data?.publicationDate}</p>
-
-         
           </CardContent>
-          <CardActions>
-            <Button size="small">Delete</Button>
-            <Button size="small">Edit</Button>
+          <CardActions
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Button
+              onClick={() => handleDelete()}
+              size="small"
+              variant="outlined"
+              color="error"
+              fullWidth
+            >
+              Delete
+            </Button>
+            <Button size="small" variant="contained" color="primary" fullWidth>
+              Edit
+            </Button>
           </CardActions>
         </div>
       </Card>
