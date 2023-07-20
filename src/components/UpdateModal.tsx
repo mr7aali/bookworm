@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useAppSelector } from "../redux/hook";
 import { useForm } from "react-hook-form";
+import { IBook, IBookPostData } from "../types/book";
+import { useUpdateBookMutation } from "../redux/api/apiSlice";
 
 const style = {
   position: "absolute",
@@ -19,20 +21,21 @@ const style = {
 };
 interface ChildComponentProps {
   open: boolean;
-  //   setStateVariable: React.Dispatch<React.SetStateAction<boolean>>;
+  book: IBook;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const UpdateModal: React.FC<ChildComponentProps> = ({ open }) => {
-  
-    const { reset, handleSubmit, register } = useForm<IBookPostData>();
-    const email = useAppSelector((state) => state.user.user.email);
+const UpdateModal: React.FC<ChildComponentProps> = ({ open, book ,setOpen}) => {
+  const { reset, handleSubmit, register } = useForm<IBookPostData>();
 
-    const onSubmit = async (data: IBookPostData) => {
-        const bookData = { ...data, email };
-        // data.email = email
-        // console.log(bookData);
-        await postBook(bookData as IBookPostData);
-        // reset();
-      };
+  const [updateBook, option] = useUpdateBookMutation();
+  const onSubmit = async (data: IBookPostData) => {
+    const result = await updateBook({ id: book?._id, data: data });
+
+    // console.log(option);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    console.log(result?.data?.success);
+    setOpen(!open)
+  };
 
   return (
     <div>
@@ -68,6 +71,7 @@ const UpdateModal: React.FC<ChildComponentProps> = ({ open }) => {
                             <input
                               type="text"
                               {...register("title")}
+                              defaultValue={book?.title}
                               id="full_name"
                               className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             />
@@ -79,6 +83,7 @@ const UpdateModal: React.FC<ChildComponentProps> = ({ open }) => {
                               type="text"
                               {...register("image")}
                               id="email"
+                              defaultValue={book?.image}
                               className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                               placeholder="Input Image Url"
                             />
@@ -91,7 +96,7 @@ const UpdateModal: React.FC<ChildComponentProps> = ({ open }) => {
                               {...register("author")}
                               id="address"
                               className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                              // value=""
+                              defaultValue={book?.author}
                               placeholder=""
                             />
                           </div>
@@ -102,6 +107,7 @@ const UpdateModal: React.FC<ChildComponentProps> = ({ open }) => {
                               type="text"
                               {...register("genre")}
                               id="city"
+                              defaultValue={book?.genre}
                               className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             />
                           </div>
@@ -114,6 +120,8 @@ const UpdateModal: React.FC<ChildComponentProps> = ({ open }) => {
                                 type="date"
                                 {...register("publicationDate")}
                                 placeholder="Country"
+                                required
+                                defaultValue={book?.publicationDate}
                                 className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent"
                               />
                               <button
@@ -160,9 +168,10 @@ const UpdateModal: React.FC<ChildComponentProps> = ({ open }) => {
                             <label htmlFor="state">Email</label>
                             <div className="h-10 bg-gray-50 flex border cursor-not-allowed  border-gray-200 rounded items-center mt-1">
                               <input
-                                placeholder={email as string}
+                                // placeholder={email as string}
                                 id="state"
-                                value={email as string}
+                                // value={email as string}
+                                defaultValue={book?.email}
                                 {...register("email")}
                                 className="px-4 appearance-none outline-none cursor-not-allowed text-gray-800 w-full bg-transparent"
                                 disabled

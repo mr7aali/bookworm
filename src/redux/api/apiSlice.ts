@@ -1,17 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IBookPostData } from '../../types/book';
+import { IBook, IBookPostData } from '../../types/book';
 
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api/v1' }),
-    tagTypes:["getBook"],
+    tagTypes: ["getBook","getSingleBook"],
     endpoints: (builder) => ({
         getAllBooks: builder.query({
             query: () => "/all-book"
         }),
         getBooks: builder.query({
             query: () => "/get-book",
-            providesTags:["getBook"]
+            providesTags: ["getBook"]
         }),
         postBook: builder.mutation({
             query: (data: IBookPostData) => ({
@@ -19,7 +19,7 @@ export const api = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags:["getBook"]
+            invalidatesTags: ["getBook"]
         }),
         deleteBook: builder.mutation({
             query: (data) => ({
@@ -27,10 +27,20 @@ export const api = createApi({
                 method: "POST",
                 body: data as { id: string, email: string }
             }),
-            invalidatesTags:["getBook"]
+            invalidatesTags: ["getBook"]
+        }),
+        updateBook: builder.mutation({
+            query: ({ id, data }: { id: string, data: Partial<IBook> }) => ({
+                url: `/update-book/${id}`,
+                method: "PATCH",
+                body: data
+            }),
+            invalidatesTags: ["getSingleBook"]
         }),
         getSingleBook: builder.query({
-            query: (id: string) => `/get-book/${id}`
+            query: (id: string) => `/get-book/${id}`,
+            providesTags:["getSingleBook"]
+            
         })
     })
 });
@@ -42,4 +52,5 @@ export const {
     useGetBooksQuery,
     useGetSingleBookQuery,
     useDeleteBookMutation,
+    useUpdateBookMutation
 } = api;

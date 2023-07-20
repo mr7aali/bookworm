@@ -134,7 +134,7 @@ export default function Details() {
           </div>
         </Card>
       </div>
-      <UpdateModal open={open} />
+      <UpdateModal open={open} book={data?.data}  setOpen={setOpen}/>
     </div>
   );
 }
