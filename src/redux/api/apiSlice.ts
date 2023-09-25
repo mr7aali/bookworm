@@ -3,7 +3,7 @@ import { IBook, IBookPostData } from '../../types/book';
 
 export const api = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://assignment-5-server-iota.vercel.app/api/v1' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api/v1' }),
     tagTypes: ["getBook","getSingleBook"],
     endpoints: (builder) => ({
         getAllBooks: builder.query({

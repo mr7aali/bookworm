@@ -2,9 +2,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import "./App.css";
 import MainLayout from "./layouts/MainLayout";
 import { useAppDispatch } from "./redux/hook";
-import { auth } from "./firebase/firebase.config";
+// import { auth } from "./firebase/firebase.config";
 import { setLoading, setUser } from "./redux/features/user/userSlice";
 import { useEffect } from "react";
+import { auth } from "./firebase/firebase.config";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <>
-      ;
+      
       <MainLayout />
     </>
   );

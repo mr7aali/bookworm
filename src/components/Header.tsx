@@ -17,6 +17,10 @@ import { setUser } from "../redux/features/user/userSlice";
 
 const Header = () => {
   const { user } = useAppSelector((state) => state.user);
+
+
+  const linkStyle = "font-semibold hidden md:block text-sm lg:text-xl p-5 hover:text-[#cf2e2e]";
+
   const dispatch = useAppDispatch();
   const singOUT = () => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -26,6 +30,7 @@ const Header = () => {
   };
   return (
     <header className="border-bottom">
+
       <div className="topbar border-bottom ">
         <div className="justify-between flex px-5 container mx-auto">
           <ul className="flex text-[16px] my-3 text-[#19110b]">
@@ -64,11 +69,12 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto flex justify-between items-center ">
+
+      <div  className="lg:container mx-auto flex justify-between items-center ">
         <div className="flex items-center text-[#161619]  ">
           <Link
             to={"/"}
-            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+            className="font-semibold text-xl p-5  md:hidden hover:text-[#cf2e2e]"
           >
             <HiMenuAlt2 />
           </Link>
@@ -79,37 +85,35 @@ const Header = () => {
             {" "}
             <img src={logo} className="h-[50px]" alt="" />
           </Link>
-          <Link
-            to={"/"}
-            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
-          >
+          <Link to={"/"} className={linkStyle}>
             Home
           </Link>
           <Link
             to={"/addbook"}
-            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+            className={linkStyle}
           >
-           Add Book
+            Add Book
           </Link>
           <Link
             to={"/allbook"}
-            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+            className={linkStyle}
           >
             All Books
           </Link>
           <Link
             to={"/"}
-            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+            className={linkStyle}
           >
             Blog
           </Link>
           <Link
             to={"/"}
-            className="font-semibold text-xl p-5 hover:text-[#cf2e2e]"
+            className={`${linkStyle} lg:block hidden`}
           >
             Others
           </Link>
         </div>
+
         <div>
           {user?.email ? (
             <Link
@@ -121,7 +125,7 @@ const Header = () => {
             </Link>
           ) : (
             <>
-              <Link to={"/signin"} className="btn log-btn cursor-pointer">
+              <Link to={"/signin"} className="btn log-btn cursor-pointer hidden md:inline">
                 Sign In
               </Link>
               <Link to={"/signup"} className="btn reg-btn cursor-pointer">
@@ -130,6 +134,8 @@ const Header = () => {
             </>
           )}
         </div>
+
+        
       </div>
     </header>
   );
