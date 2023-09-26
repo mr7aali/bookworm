@@ -89,8 +89,8 @@ const Header = () => {
           </Link>
 
 
-          {NavLinkText.map((nav) => (
-            <Link to={nav.path} className={linkStyle}>
+          {NavLinkText.map((nav ,index) => (
+            <Link key={index} to={nav.path} className={linkStyle}>
               {nav.text}
             </Link>
           ))}
