@@ -9,6 +9,7 @@ const AllBook = () => {
   const [query, setQuery] = useState<string>("");
   // eslint-disable-next-line prefer-const
   let contained;
+  console.log(data);
   const filteredData: IBook[] = data?.data?.filter(
     (item) =>
       item.title.toLowerCase().includes(query) ||
@@ -41,7 +42,6 @@ const AllBook = () => {
                 )
               }
             />
-
             <span className="mr-5 text-xl cursor-pointer hover:text-[#f75454] absolute right-0">
               <BsSearch />
             </span>

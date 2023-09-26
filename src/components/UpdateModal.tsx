@@ -4,10 +4,9 @@ import Modal from "@mui/material/Modal";
 import { useForm } from "react-hook-form";
 import { IBook, IBookPostData } from "../types/book";
 import { useUpdateBookMutation } from "../redux/api/apiSlice";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { IPostResponse } from "../types/InterfaceResponse";
 const style = {
   position: "absolute",
   top: "50%",
@@ -24,13 +23,6 @@ interface ChildComponentProps {
   book: IBook;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-type IRsesponse = {
-  statusCode: number;
-  success: boolean;
-  message: string;
-  data: IBook | null;
-};
 const UpdateModal: React.FC<ChildComponentProps> = ({
   open,
   book,
@@ -40,13 +32,7 @@ const UpdateModal: React.FC<ChildComponentProps> = ({
 
   const [updateBook] = useUpdateBookMutation();
   const onSubmit = async (data: IBookPostData) => {
-    const result:
-      | {
-          data: IRsesponse;
-        }
-      | {
-          error: FetchBaseQueryError | SerializedError;
-        } = await updateBook({ id: book?._id, data: data });
+    const result:IPostResponse = await updateBook({ id: book?._id, data: data });
 
     if ("data" in result) {
       if (result.data.success) {

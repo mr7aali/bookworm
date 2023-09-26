@@ -11,6 +11,7 @@ import { useAppSelector } from "../redux/hook";
 import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
 import { useState } from "react";
+import Review from "./Review";
 
 type MyData = {
   data: IBook;
@@ -51,9 +52,8 @@ export default function Details() {
     toast.success("Book deleted successfully");
     navigate("/");
   };
-  console.log(data);
+
   return (
-    
     <div>
       <div className="container mx-auto">
         <section className="text-gray-700 body-font overflow-hidden bg-white">
@@ -73,7 +73,7 @@ export default function Details() {
                 <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                   {data?.data?.title}
                 </h1>
-                <div  className="flex mb-4">
+                <div className="flex mb-4">
                   <div className="flex items-center mt-2.5 space-x-3">
                     <h2>{data?.data?.publicationDate}</h2>
                   </div>
@@ -86,7 +86,7 @@ export default function Details() {
                       variant="outlined"
                       color="error"
                       sx={{
-                        margin:'5px'
+                        margin: "5px",
                       }}
                       fullWidth
                     >
@@ -94,8 +94,8 @@ export default function Details() {
                     </Button>
                     <Button
                       sx={{
-                      margin:'5px'
-                    }}
+                        margin: "5px",
+                      }}
                       size="small"
                       variant="contained"
                       color="primary"
@@ -158,59 +158,6 @@ export default function Details() {
                   quibusdam nostrum. Debitis nihil placeat ut recusandae
                   adipisci, ab consectetur iure consequatur quisquam
                   reprehenderit laudantium neque vitae! Quo, est quisquam nemo
-                  sapiente doloremque corrupti ab atque reiciendis ullam
-                  deserunt eveniet consequuntur, accusamus quam nam! Odit et
-                  dolore deserunt distinctio, commodi ipsa, architecto nulla
-                  soluta adipisci incidunt dignissimos quod possimus, fugiat ab
-                  iusto accusamus! Ex cum fuga laboriosam ut possimus numquam
-                  reiciendis necessitatibus neque ipsa laborum voluptates nam,
-                  repellendus suscipit reprehenderit! Tenetur accusantium rem
-                  ducimus facere earum quae doloribus deleniti perferendis
-                  minima? Vitae aliquam debitis consectetur aspernatur eligendi
-                  fugit dicta omnis nemo repellendus eos, totam perspiciatis
-                  odio excepturi sint eveniet aliquid. Iste, ducimus aliquam.
-                  Expedita a repudiandae minima in error eos? Fuga, repellendus
-                  accusantium reprehenderit velit ipsum harum fugit aperiam iste
-                  necessitatibus rem perferendis explicabo. Ullam tenetur nihil
-                  facilis consequatur? Quo, laborum. Quas laudantium ab vitae
-                  est expedita maiores odio enim odit voluptatibus eius totam
-                  velit omnis debitis minus quod perspiciatis incidunt dolor
-                  eligendi dolorum, hic atque animi. Quasi corporis ut hic
-                  reprehenderit molestias modi ipsa deserunt accusamus vero? Ut
-                  error fugiat laborum sint, aperiam quas at ducimus tempora,
-                  vitae autem veniam distinctio earum harum sit, pariatur
-                  temporibus vero a libero explicabo excepturi accusamus?
-                  Consequatur, natus praesentium ab cupiditate maiores iusto
-                  quod quasi error cumque voluptates labore similique aut
-                  distinctio voluptatibus in esse perferendis autem voluptate
-                  vero, eum nisi quo earum aliquam. Obcaecati nisi similique
-                  mollitia? Est accusamus, impedit necessitatibus soluta, ullam
-                  consectetur adipisci quaerat quam asperiores neque maxime
-                  numquam illo mollitia eaque doloribus accusantium debitis
-                  consequatur perspiciatis inventore totam? Fuga perferendis,
-                  omnis exercitationem sit similique saepe ab doloribus
-                  repudiandae itaque aut? Dolore aspernatur vitae voluptatibus
-                  est error soluta maiores? Assumenda quos quod iure sit?
-                  Distinctio fugit expedita vero delectus adipisci quod modi,
-                  temporibus minus reiciendis officiis, illum odio quia, totam
-                  ullam! Quos quas, qui hic expedita facere, eligendi autem
-                  debitis vitae saepe, recusandae at eius itaque praesentium
-                  dolores excepturi aut exercitationem ad! Vel iusto animi hic
-                  facere ad. Quisquam ipsam provident praesentium culpa officia.
-                  Earum, perspiciatis? Ipsam ut esse reiciendis expedita facere
-                  accusamus ipsum quod, vel provident quos iusto, ullam numquam
-                  dolore doloribus eum quibusdam voluptatem similique id minima!
-                  Nemo molestias a, saepe perspiciatis cupiditate impedit, omnis
-                  minus, maxime libero consequatur repellat quae quidem? Dolore
-                  cupiditate dolores pariatur labore in? Harum ut est delectus,
-                  aut earum nihil distinctio cupiditate sunt maxime culpa
-                  aliquid? Omnis quod consequuntur id, nihil a vero eum
-                  voluptatem placeat nam dignissimos. Nobis, excepturi! Nam
-                  ratione cum eum? Quis, dignissimos laborum animi blanditiis
-                  vero nam dolor tempore ad, nobis accusamus nesciunt similique.
-                  Sunt quae cumque reprehenderit suscipit et delectus
-                  consequatur nam dolor cupiditate repellat provident, itaque
-                  quibusdam ullam amet modi alias necessitatibus doloribus!
                 </p>
                 <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
                   <div className="flex">
@@ -242,15 +189,17 @@ export default function Details() {
                   </div>
                 </div>
 
-                <Link to={"/allbook"} aria-label="Button for product page">                
+                <Link to={"/allbook"} aria-label="Button for product page">
                   Back
                 </Link>
               </div>
             </div>
           </div>
         </section>
+        <Review book={data?.data} />
       </div>
-      <UpdateModal open={open} book={data?.data}  setOpen={setOpen}/>
+
+      <UpdateModal open={open} book={data?.data} setOpen={setOpen} />
     </div>
   );
 }

@@ -1,23 +1,31 @@
 import { useForm } from "react-hook-form";
-import { IBookPostData } from "../types/book";
+import {  IBookPostData } from "../types/book";
 import "./../../src/pages/style/AllBook.css";
 import { useAppSelector } from "../redux/hook";
 import { usePostBookMutation } from "../redux/api/apiSlice";
+import { toast } from "react-toastify";
+import { IPostResponse } from "../types/InterfaceResponse";
+
+
 const AddBook = () => {
-  
   const { reset, handleSubmit, register } = useForm<IBookPostData>();
   const email = useAppSelector((state) => state.user.user.email);
-
+  console.log(email);
   const [postBook] = usePostBookMutation();
 
   const onSubmit = async (data: IBookPostData) => {
     const bookData = { ...data, email };
-    // data.email = email
-    // console.log(bookData);
-    await postBook(bookData as IBookPostData);
-    reset();
+    
+    const result: IPostResponse = await postBook(bookData as IBookPostData);
+    if ("data" in result) {
+      if (result.data.success) {
+        toast.success(result.data.message);
+        reset();
+      }
+    }
+    
   };
- 
+
   return (
     <div>
       {/* <!-- component --> */}
@@ -28,7 +36,7 @@ const AddBook = () => {
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                 <div className="text-gray-600">
                   {" "}
-                  <p className="font-medium text-lg">Personal Details</p>
+                  <p className="font-medium text-lg">Book Details</p>
                   <p>Please fill out all the fields.</p>
                 </div>
 
@@ -44,6 +52,7 @@ const AddBook = () => {
                         type="text"
                         {...register("title")}
                         id="full_name"
+                        required
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                       />
                     </div>
@@ -54,6 +63,7 @@ const AddBook = () => {
                         type="text"
                         {...register("image")}
                         id="email"
+                        required
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         placeholder="Input Image Url"
                       />
@@ -63,6 +73,7 @@ const AddBook = () => {
                       <label htmlFor="address">Author</label>
                       <input
                         type="text"
+                        required
                         {...register("author")}
                         id="address"
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
@@ -77,6 +88,7 @@ const AddBook = () => {
                         type="text"
                         {...register("genre")}
                         id="city"
+                        required
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                       />
                     </div>
@@ -89,6 +101,7 @@ const AddBook = () => {
                           type="date"
                           {...register("publicationDate")}
                           placeholder="Country"
+                          required
                           className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent"
                         />
                         <button
@@ -137,7 +150,7 @@ const AddBook = () => {
                         <input
                           placeholder={email as string}
                           id="state"
-                          value={email as string}
+                          value={email as string || ""}
                           {...register("email")}
                           className="px-4 appearance-none outline-none cursor-not-allowed text-gray-800 w-full bg-transparent"
                           disabled
