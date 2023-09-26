@@ -6,6 +6,7 @@ import SignIn from "../pages/SignIn";
 import AllBook from "../pages/AllBook";
 import AddBook from "../components/AddBook";
 import Details from "../components/Details";
+import Wishlist from "../pages/Wishlist";
 
 const routes = createBrowserRouter([
   {
@@ -33,8 +34,12 @@ const routes = createBrowserRouter([
         element: <AllBook />,
       },
       {
-        path:"addbook",
+        path:"/addbook",
         element:<AddBook/>
+      },
+      {
+        path:"/wishlist",
+        element:<Wishlist/>
       },
     ],
   },

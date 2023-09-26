@@ -17,9 +17,22 @@ import { setUser } from "../redux/features/user/userSlice";
 
 const Header = () => {
   const { user } = useAppSelector((state) => state.user);
+  const Icons = [
+    { path: "/location", Icon: <MdOutlineAddLocationAlt /> },
+    { path: "/location", Icon: <BsArrowLeftRight /> },
+    { path: "/wishlist", Icon: <AiOutlineHeart /> },
+    { path: "/location", Icon: <FiUsers /> },
+    { path: "/location", Icon: <AiOutlineShoppingCart /> },
+  ];
 
-
-  const linkStyle = "font-semibold hidden md:block text-sm lg:text-xl p-5 hover:text-[#cf2e2e]";
+  const NavLinkText = [
+    { path: "/", text: "Home" },
+    { path: "/addbook", text: "Add Book" },
+    { path: "/allbook", text: "All Book" },
+    { path: "/allbook", text: " Blog" },
+  ];
+  const linkStyle =
+    "font-semibold hidden md:block text-sm lg:text-xl p-5 hover:text-[#cf2e2e]";
 
   const dispatch = useAppDispatch();
   const singOUT = () => {
@@ -30,7 +43,6 @@ const Header = () => {
   };
   return (
     <header className="border-bottom">
-
       <div className="topbar border-bottom ">
         <div className="justify-between flex px-5 container mx-auto">
           <ul className="flex text-[16px] my-3 text-[#19110b]">
@@ -49,28 +61,18 @@ const Header = () => {
           </ul>
           <div className="flex items-center">
             <ul className="flex text-[20px] items-center ">
-              <li className="mx-5 cursor-pointer">
-                {" "}
-                <MdOutlineAddLocationAlt />
-              </li>
-              <li className="mx-5 cursor-pointer">
-                <BsArrowLeftRight />
-              </li>
-              <li className="mx-5 cursor-pointer">
-                <AiOutlineHeart />
-              </li>
-              <li className="mx-5 cursor-pointer">
-                <FiUsers />
-              </li>
-              <li className="mx-5 cursor-pointer">
-                <AiOutlineShoppingCart />
-              </li>
+              {Icons.map((icon, index) => (
+                <Link key={index} to={icon.path}>
+                  {" "}
+                  <li className="mx-5 cursor-pointer">{icon.Icon}</li>
+                </Link>
+              ))}
             </ul>
           </div>
         </div>
       </div>
 
-      <div  className="lg:container mx-auto flex justify-between items-center ">
+      <div className="lg:container mx-auto flex justify-between items-center ">
         <div className="flex items-center text-[#161619]  ">
           <Link
             to={"/"}
@@ -85,31 +87,16 @@ const Header = () => {
             {" "}
             <img src={logo} className="h-[50px]" alt="" />
           </Link>
-          <Link to={"/"} className={linkStyle}>
-            Home
-          </Link>
-          <Link
-            to={"/addbook"}
-            className={linkStyle}
-          >
-            Add Book
-          </Link>
-          <Link
-            to={"/allbook"}
-            className={linkStyle}
-          >
-            All Books
-          </Link>
-          <Link
-            to={"/"}
-            className={linkStyle}
-          >
-            Blog
-          </Link>
-          <Link
-            to={"/"}
-            className={`${linkStyle} lg:block hidden`}
-          >
+
+
+          {NavLinkText.map((nav) => (
+            <Link to={nav.path} className={linkStyle}>
+              {nav.text}
+            </Link>
+          ))}
+
+
+          <Link to={"/"} className={`${linkStyle} lg:block hidden`}>
             Others
           </Link>
         </div>
@@ -125,7 +112,10 @@ const Header = () => {
             </Link>
           ) : (
             <>
-              <Link to={"/signin"} className="btn log-btn cursor-pointer hidden md:inline">
+              <Link
+                to={"/signin"}
+                className="btn log-btn cursor-pointer hidden md:inline"
+              >
                 Sign In
               </Link>
               <Link to={"/signup"} className="btn reg-btn cursor-pointer">
@@ -134,8 +124,6 @@ const Header = () => {
             </>
           )}
         </div>
-
-        
       </div>
     </header>
   );
