@@ -103,8 +103,8 @@ const AddBook = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
                             strokeLinejoin="round"
                           >
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -121,8 +121,8 @@ const AddBook = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
                             strokeLinejoin="round"
                           >
                             <polyline points="18 15 12 9 6 15"></polyline>

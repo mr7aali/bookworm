@@ -6,10 +6,13 @@ import "./style/Home.css";
 import { BsSearch } from "react-icons/bs";
 import { MyQueryResult } from "./interface";
 import { CiCircleRemove } from "react-icons/ci";
+import { searchIconStyle } from "../components/helpers/PageStyle";
 
 const Home = () => {
   const { data } = useGetBooksQuery(undefined) as MyQueryResult;
+
   const [query, setQuery] = useState<string>("");
+
   // eslint-disable-next-line prefer-const
   let contained;
   const filteredData: IBook[] = data?.data?.filter(
@@ -18,6 +21,7 @@ const Home = () => {
       item.author.toLowerCase().includes(query) ||
       item.genre.toLowerCase().includes(query)
   );
+
   if (!query) {
     contained = data?.data?.map((b: IBook) => <Cart key={b._id} book={b} />);
   } else if (query) {
@@ -44,27 +48,21 @@ const Home = () => {
           />
 
           <BsSearch
-            className={`mr-5 ${
-              query ? "hidden" : ""
-            } text-xl cursor-pointer hover:text-[#f75454] absolute right-0`}
+            // className={`mr-5 ${
+            //   query ? "hidden" : ""
+            // } text-xl cursor-pointer hover:text-[#f75454] absolute right-0`}
+            className={searchIconStyle(query, "search")}
           />
           <span
-            className={`mr-5 ${
-              query ? "" : "hidden"
-            } text-xl cursor-pointer hover:text-[#f75454] absolute right-0`}
+            className={searchIconStyle(query, "close")}
             onClick={() => setQuery("")}
           >
-            <CiCircleRemove></CiCircleRemove>
+            <CiCircleRemove />
           </span>
         </div>
       </div>
       <div>
-        <div className="featured-card-container">
-          {/* {data?.data?.map((b: IBook) => (
-              <Cart key={b._id} book={b} />
-            ))} */}
-          {contained}
-        </div>
+        <div className="featured-card-container"> {contained}</div>
       </div>
     </div>
   );

@@ -6,12 +6,7 @@ import {
 } from "../redux/api/apiSlice";
 import { IBook } from "../types/book";
 import { BsFillCartCheckFill } from "react-icons/bs";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import { useAppSelector } from "../redux/hook";
 import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
@@ -58,82 +53,7 @@ export default function Details() {
   };
   console.log(data);
   return (
-    // <div
-    //   // style={{ border: "1px solid red", height: "55vh" }}
-    //   className="container mx-auto h-[55vh] flex items-center justify-center"
-    // >
-    //   <div>
-    //     <Card
-    //       sx={{
-    //         maxWidth: 800,
-    //         border: "1px solid #eae8e4",
-    //         my: "80px",
-    //         display: "flex",
-    //         margin: "80px auto",
-    //         background: "#FBFEFB",
-    //       }}
-    //     >
-    //       <div
-    //         style={{
-    //           width: "350px",
-    //           height: "200px",
-    //           padding: "4px",
-    //         }}
-    //       >
-    //         <img
-    //           style={{
-    //             width: "100%",
-    //             height: "100%",
-    //             borderRadius: "8px",
-    //           }}
-    //           src="https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/12-120x183.jpg"
-    //           alt=""
-    //         />
-    //       </div>
-    //       <div>
-    //         <CardContent>
-    //           <Typography gutterBottom variant="h5" component="div">
-    //             {data?.data?.title}
-    //           </Typography>
-
-    //           <p className="text-gray-700 hover:text-[#f75454] cursor-pointer mt-[-2px]">
-    //             Author: {data?.data?.author}
-    //           </p>
-    //           <p>Genre: {data?.data?.genre}</p>
-    //           <p>Publication Date: {data?.data?.publicationDate}</p>
-    //         </CardContent>
-    //         <CardActions
-    //           sx={{
-    //             display: "flex",
-    //             alignItems: "center",
-    //             justifyContent: "space-between",
-    //           }}
-    //         >
-    //           <Button
-    //             // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    //             onClick={() => handleDelete()}
-    //             size="small"
-    //             variant="outlined"
-    //             color="error"
-    //             fullWidth
-    //           >
-    //             Delete
-    //           </Button>
-    //           <Button
-    //             size="small"
-    //             variant="contained"
-    //             color="primary"
-    //             fullWidth
-    //             onClick={() => setOpen(!open)}
-    //           >
-    //             Edit
-    //           </Button>
-    //         </CardActions>
-    //       </div>
-    //     </Card>
-    //   </div>
-    //   <UpdateModal open={open} book={data?.data}  setOpen={setOpen}/>
-    // </div>
+    
     <div>
       <div className="container mx-auto">
         <section className="text-gray-700 body-font overflow-hidden bg-white">
@@ -322,9 +242,8 @@ export default function Details() {
                   </div>
                 </div>
 
-                <Link to={"/allbook"} aria-label="Button for product page">
-                  {/* <View button='Back'></View> */}
-                  View
+                <Link to={"/allbook"} aria-label="Button for product page">                
+                  Back
                 </Link>
               </div>
             </div>

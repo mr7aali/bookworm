@@ -84,18 +84,13 @@ const Header = () => {
             to={"/"}
             className="font-semibold text-xl p-0 hover:text-[#cf2e2e]"
           >
-            {" "}
             <img src={logo} className="h-[50px]" alt="" />
           </Link>
-
-
-          {NavLinkText.map((nav ,index) => (
-            <Link key={index} to={nav.path} className={linkStyle}>
+          { NavLinkText.map((nav ,index) => (
+            <Link key={index} to={nav.path} className={ linkStyle }>
               {nav.text}
             </Link>
           ))}
-
-
           <Link to={"/"} className={`${linkStyle} lg:block hidden`}>
             Others
           </Link>

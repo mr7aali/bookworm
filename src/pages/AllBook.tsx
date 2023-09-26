@@ -42,7 +42,9 @@ const AllBook = () => {
               }
             />
 
-            <BsSearch className="mr-5 text-xl cursor-pointer hover:text-[#f75454] absolute right-0" />
+            <span className="mr-5 text-xl cursor-pointer hover:text-[#f75454] absolute right-0">
+              <BsSearch />
+            </span>
           </div>
         </div>
 
