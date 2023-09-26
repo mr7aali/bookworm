@@ -139,8 +139,6 @@ export default function Details() {
         <section className="text-gray-700 body-font overflow-hidden bg-white">
           <div className="container px-5 py-5 mx-auto">
             <div className="lg:w-4/5 mx-auto flex flex-wrap flex-col ">
-              {/* <Slider images={post.images} /> */}
-
               <div className="mx-auto lg:w-4/5 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                 <div className="rounded-full	">
                   <img
@@ -155,15 +153,39 @@ export default function Details() {
                 <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                   {data?.data?.title}
                 </h1>
-                <div style={{border:"1px solid red"}} className="flex mb-4">
+                <div  className="flex mb-4">
                   <div className="flex items-center mt-2.5 space-x-3">
-                
                     <h2>{data?.data?.publicationDate}</h2>
                   </div>
-                  <div className="ml-auto">
-                    <button>Delete</button>
-                    <button>Edit</button>
+
+                  <div className="ml-auto flex py-5">
+                    <Button
+                      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                      onClick={() => handleDelete()}
+                      size="small"
+                      variant="outlined"
+                      color="error"
+                      sx={{
+                        margin:'5px'
+                      }}
+                      fullWidth
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      sx={{
+                      margin:'5px'
+                    }}
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      onClick={() => setOpen(!open)}
+                    >
+                      Edit
+                    </Button>
                   </div>
+
                   <span className=" flex  pl-3 py-2 border-l-2 border-gray-200">
                     <a className="text-gray-500 hover:text-red-500 cursor-pointer m-2">
                       <svg
@@ -309,6 +331,7 @@ export default function Details() {
           </div>
         </section>
       </div>
+      <UpdateModal open={open} book={data?.data}  setOpen={setOpen}/>
     </div>
   );
 }

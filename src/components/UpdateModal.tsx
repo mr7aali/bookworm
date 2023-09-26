@@ -7,6 +7,7 @@ import { useUpdateBookMutation } from "../redux/api/apiSlice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { SerializedError } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 const style = {
   position: "absolute",
   top: "50%",
@@ -14,7 +15,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 1000,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "1px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -35,7 +36,7 @@ const UpdateModal: React.FC<ChildComponentProps> = ({
   book,
   setOpen,
 }) => {
-  const {  handleSubmit, register } = useForm<IBookPostData>();
+  const { handleSubmit, register } = useForm<IBookPostData>();
 
   const [updateBook] = useUpdateBookMutation();
   const onSubmit = async (data: IBookPostData) => {
@@ -50,6 +51,7 @@ const UpdateModal: React.FC<ChildComponentProps> = ({
     if ("data" in result) {
       if (result.data.success) {
         toast.success(result.data.message);
+        setOpen(!open);
         return;
       }
     }
@@ -67,7 +69,10 @@ const UpdateModal: React.FC<ChildComponentProps> = ({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div>
+          <div className="relative">
+            <span onClick={()=>setOpen(!open)} className="ml-auto text-3xl absolute right-2 top-2 cursor-pointer hover:text-red-400">
+              <IoIosCloseCircleOutline />
+            </span>
             {/* <!-- component --> */}
             <div className="py-[60px] p-6 bg-gray-100 flex items-center justify-center">
               <div className="container max-w-screen-lg mx-auto">
@@ -201,6 +206,9 @@ const UpdateModal: React.FC<ChildComponentProps> = ({
 
                           <div className="md:col-span-5 text-right">
                             <div className="inline-flex items-end">
+                              <span onClick={()=>setOpen(!open)} className="cursor-pointer border border-blue-500 hover:border-blue-700 text-blue-700 font-bold py-2 px-4 rounded mr-2">
+                                Cancle
+                              </span>
                               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Submit
                               </button>

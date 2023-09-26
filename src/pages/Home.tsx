@@ -1,10 +1,11 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import Cart from "../components/Cart";
 import { useGetBooksQuery } from "../redux/api/apiSlice";
 import { IBook } from "../types/book";
 import "./style/Home.css";
 import { BsSearch } from "react-icons/bs";
 import { MyQueryResult } from "./interface";
+import { CiCircleRemove } from "react-icons/ci";
 
 const Home = () => {
   const { data } = useGetBooksQuery(undefined) as MyQueryResult;
@@ -27,9 +28,7 @@ const Home = () => {
   }
   return (
     <div className="container mx-auto  mb-20">
-      <div
-        className="flex  justify-center items-center relative"
-      >
+      <div className="flex  justify-center items-center relative">
         <h2 className="mx-auto text-[#161619]  text-[30px] md:text-4xl font-semibold my-20">
           {/* Featured Books */}
         </h2>
@@ -38,14 +37,26 @@ const Home = () => {
             type="text"
             className="h-14 w-96 pr-8 pl-5 rounded z-0 bg-slate-50 focus:shadow focus:outline-none"
             placeholder="Search anything..."
+            value={query}
             onChange={(e) =>
               setQuery((e.target as HTMLInputElement).value.toLowerCase() || "")
             }
           />
 
-          <BsSearch className="mr-5 text-xl cursor-pointer hover:text-[#f75454] absolute right-0" />
+          <BsSearch
+            className={`mr-5 ${
+              query ? "hidden" : ""
+            } text-xl cursor-pointer hover:text-[#f75454] absolute right-0`}
+          />
+          <span
+            className={`mr-5 ${
+              query ? "" : "hidden"
+            } text-xl cursor-pointer hover:text-[#f75454] absolute right-0`}
+            onClick={() => setQuery("")}
+          >
+            <CiCircleRemove></CiCircleRemove>
+          </span>
         </div>
-
       </div>
       <div>
         <div className="featured-card-container">
