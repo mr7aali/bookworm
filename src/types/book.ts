@@ -1,12 +1,14 @@
 export type IBook = {
-    
+
     title: string;
     author: string;
     genre: string
     publicationDate: string;
     reviews: string[];
     email: string;
-    image:string;
+    image: string;
+    markAsReadList: string[];
+    wishList: string[];
 
     createdAt: string;
     updatedAt: string;
@@ -23,4 +25,6 @@ export type IBookPostData = {
     reviews?: [string];
     email: string;
     image: string;
+    markAsReadList: string[];
+    wishList: string[];
 }

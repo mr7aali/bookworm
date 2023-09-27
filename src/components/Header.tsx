@@ -29,7 +29,7 @@ const Header = () => {
     { path: "/", text: "Home" },
     { path: "/addbook", text: "Add Book" },
     { path: "/allbook", text: "All Book" },
-    { path: "/allbook", text: " Blog" },
+    { path: "/wishlist", text: "WishList" },
   ];
   const linkStyle =
     "font-semibold hidden md:block text-sm lg:text-xl p-5 hover:text-[#cf2e2e]";

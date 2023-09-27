@@ -6,6 +6,7 @@ import { useUpdateBookMutation } from "../redux/api/apiSlice";
 import { IPostResponse } from "../types/InterfaceResponse";
 import { toast } from "react-toastify";
 const Review: React.FC<RevewComponentProps> = ({ book }) => {
+  console.log(book);
   const [comment, setComment] = useState("");
   const [updateBook] = useUpdateBookMutation();
 
@@ -19,10 +20,14 @@ const Review: React.FC<RevewComponentProps> = ({ book }) => {
       id: book?._id,
       data: data,
     });
+
+    
     if('data' in result ){
       toast.success("Review submit !");
       setComment("");
     }
+
+
   };
 
 

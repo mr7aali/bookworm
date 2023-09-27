@@ -65,7 +65,7 @@ const Home = () => {
 
       </div>
       <div>
-        <div className="featured-card-container"> {contained}</div>
+      <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 container  mx-auto"> {contained}</div>
       </div>
     </div>
   );

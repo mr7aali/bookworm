@@ -1,31 +1,91 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Link } from "react-router-dom";
 import { IBook } from "../types/book";
 import "./styles/cart.css";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
+import { useAppSelector } from "../redux/hook";
+import { IPostResponse } from "../types/InterfaceResponse";
+import { useUpdateBookMutation } from "../redux/api/apiSlice";
+import { toast } from "react-toastify";
 interface IProps {
   book: IBook;
 }
 const Cart = ({ book }: IProps) => {
   const [added, setAdded] = useState(false);
-  console.log(book)
+  const [makeRead, setmakeRead] = useState(false);
+  const email = useAppSelector((state) => state.user.user.email) ?? "";
+  const [updateBook] = useUpdateBookMutation();
+
+  console.log(email);
+  console.log(book.wishList.includes(email));
+
+  const handleWishLisst = async () => {
+    const updateWishList = [...book.wishList, email];
+    const data = {
+      wishList: updateWishList as string[],
+    };
+
+    if (!added) {
+      const result: IPostResponse = await updateBook({
+        id: book?._id,
+        data: data,
+      });
+      if ("data" in result) {
+        toast.success("Added to wish list!");
+        setAdded(!added);
+      }
+    }
+  };
+  const handleMakeRead = async () => {
+    const updateMakeRead = [...book.markAsReadList, email];
+    const data = {
+      markAsReadList: updateMakeRead as string[],
+    };
+
+    if (!makeRead) {
+      const result: IPostResponse = await updateBook({
+        id: book?._id,
+        data: data,
+      });
+      if ("data" in result) {
+        toast.success("Update to make read!");
+        setmakeRead(!makeRead);
+      }
+    }
+
+    setmakeRead(!makeRead);
+  };
+
+  useEffect(() => {
+    const WishListconditon = book.wishList.includes(email);
+    setAdded(WishListconditon);
+    const MakeListContion = book.markAsReadList.includes(email);
+    setmakeRead(MakeListContion);
+  }, [book, email]);
+
   return (
     //   <Link to={`/allbook/${book._id}`}>
-   
-    <div className="cart-container cursor-pointer">
+
+    <div
+      className={`cart-container cursor-pointer mx-auto max-w-[300px] ${
+        makeRead ? "bg-red-300 rounded shadow-sm" : ""
+      }`}
+    >
       <div className="p-[5px] relative">
         <div className="relative">
           {added ? (
             <span
-              onClick={() => setAdded(!added)}
+              onClick={handleWishLisst}
               className="text-2xl absolute right-0  m-2"
             >
               <BsSuitHeartFill />
             </span>
           ) : (
             <span
-              onClick={() => setAdded(!added)}
+              onClick={handleWishLisst}
               className="text-2xl absolute right-0  m-2"
             >
               <BsSuitHeart />
@@ -67,6 +127,8 @@ const Cart = ({ book }: IProps) => {
             variant="outlined"
             fullWidth
             className="mx-2"
+            disabled={makeRead}
+            onClick={handleMakeRead}
           >
             Make Read
           </Button>

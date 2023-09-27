@@ -1,7 +1,11 @@
 .featured-card-container{
-    display: flex; 
-    flex-wrap: wrap;
+    /* display: flex;  */
+    /* flex-wrap: wrap; */
     /* border: 1px solid red; */
-    justify-content: space-between;
-   
+    /* justify-content: space-between; */
+   /* display: grid;
+   grid-template-columns: 1fr ;   */
+   /* width: 350px;  */
+
+  
 }
