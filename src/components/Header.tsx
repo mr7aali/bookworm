@@ -46,8 +46,8 @@ const Header = () => {
       <div className="topbar border-bottom ">
         <div className="justify-between flex px-5 container mx-auto">
           <ul className="flex text-[16px] my-3 text-[#19110b]">
-            <li className="mr-20 flex items-center">
-              <AiOutlineQuestionCircle />
+            <li className="mr-20 md:flex hidden items-center ">
+              <AiOutlineQuestionCircle /> 
               <a href="#" className="ml-2">
                 Can we help you?
               </a>
@@ -64,7 +64,7 @@ const Header = () => {
               {Icons.map((icon, index) => (
                 <Link key={index} to={icon.path}>
                   {" "}
-                  <li className="mx-5 cursor-pointer">{icon.Icon}</li>
+                  <li className="md:mx-5 cursor-pointer mx-2">{icon.Icon}</li>
                 </Link>
               ))}
             </ul>

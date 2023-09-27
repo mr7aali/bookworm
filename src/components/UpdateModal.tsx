@@ -2,11 +2,12 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useForm } from "react-hook-form";
-import { IBook, IBookPostData } from "../types/book";
+import { IBookPostData } from "../types/book";
 import { useUpdateBookMutation } from "../redux/api/apiSlice";
 import { toast } from "react-toastify";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IPostResponse } from "../types/InterfaceResponse";
+import { UpdateComponentProps } from "./helpers/componentPropse.type";
 const style = {
   position: "absolute",
   top: "50%",
@@ -18,12 +19,8 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-interface ChildComponentProps {
-  open: boolean;
-  book: IBook;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-const UpdateModal: React.FC<ChildComponentProps> = ({
+
+const UpdateModal: React.FC<UpdateComponentProps> = ({
   open,
   book,
   setOpen,
@@ -31,8 +28,13 @@ const UpdateModal: React.FC<ChildComponentProps> = ({
   const { handleSubmit, register } = useForm<IBookPostData>();
 
   const [updateBook] = useUpdateBookMutation();
+  
   const onSubmit = async (data: IBookPostData) => {
-    const result:IPostResponse = await updateBook({ id: book?._id, data: data });
+    console.log(data);
+    const result: IPostResponse = await updateBook({
+      id: book?._id,
+      data: data,
+    });
 
     if ("data" in result) {
       if (result.data.success) {
@@ -56,7 +58,10 @@ const UpdateModal: React.FC<ChildComponentProps> = ({
       >
         <Box sx={style}>
           <div className="relative">
-            <span onClick={()=>setOpen(!open)} className="ml-auto text-3xl absolute right-2 top-2 cursor-pointer hover:text-red-400">
+            <span
+              onClick={() => setOpen(!open)}
+              className="ml-auto text-3xl absolute right-2 top-2 cursor-pointer hover:text-red-400"
+            >
               <IoIosCloseCircleOutline />
             </span>
             {/* <!-- component --> */}
@@ -192,7 +197,10 @@ const UpdateModal: React.FC<ChildComponentProps> = ({
 
                           <div className="md:col-span-5 text-right">
                             <div className="inline-flex items-end">
-                              <span onClick={()=>setOpen(!open)} className="cursor-pointer border border-blue-500 hover:border-blue-700 text-blue-700 font-bold py-2 px-4 rounded mr-2">
+                              <span
+                                onClick={() => setOpen(!open)}
+                                className="cursor-pointer border border-blue-500 hover:border-blue-700 text-blue-700 font-bold py-2 px-4 rounded mr-2"
+                              >
                                 Cancle
                               </span>
                               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
