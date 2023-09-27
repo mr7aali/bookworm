@@ -6,7 +6,7 @@ import { useUpdateBookMutation } from "../redux/api/apiSlice";
 import { IPostResponse } from "../types/InterfaceResponse";
 import { toast } from "react-toastify";
 const Review: React.FC<RevewComponentProps> = ({ book }) => {
-  console.log(book);
+
   const [comment, setComment] = useState("");
   const [updateBook] = useUpdateBookMutation();
 
@@ -38,8 +38,8 @@ const Review: React.FC<RevewComponentProps> = ({ book }) => {
       <div className="w-4/5 mx-auto">
         <blockquote className="relative w-full bg-white p-5 border border-gray-200 break-inside-avoid-column m-10">
           <div className="flex flex-col justify-start items-center">
-            {book?.reviews?.map((r) => (
-              <div
+            {book?.reviews?.map((r,index) => (
+              <div key={index}
               
                 className="flex flex-col justify-start items-center pt-5"
               >

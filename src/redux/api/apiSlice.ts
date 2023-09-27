@@ -4,14 +4,14 @@ import { IBook, IBookPostData } from '../../types/book';
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api/v1' }),
-    tagTypes: ["getBook","getSingleBook"],
+    tagTypes: ["getBook","getSingleBook","wishList&MakeReas"],
     endpoints: (builder) => ({
         getAllBooks: builder.query({
             query: () => "/all-book"
         }),
         getBooks: builder.query({
             query: () => "/get-book",
-            providesTags: ["getBook"]
+            providesTags: ["getBook","wishList&MakeReas"]
         }),
         postBook: builder.mutation({
             query: (data: IBookPostData) => ({
@@ -22,10 +22,10 @@ export const api = createApi({
             invalidatesTags: ["getBook"]
         }),
         deleteBook: builder.mutation({
-            query: (data) => ({
-                url: "/delete-book",
-                method: "POST",
-                body: data as { id: string, email: string }
+            query: (data:{id:string,email:string}) => ({
+                url: `/delete-book/${data.id}`,
+                method: "DELETE",
+                body: data.id
             }),
             invalidatesTags: ["getBook"]
         }),
@@ -35,7 +35,7 @@ export const api = createApi({
                 method: "PATCH",
                 body: data
             }),
-            invalidatesTags: ["getSingleBook"]
+            invalidatesTags: ["getSingleBook","wishList&MakeReas"]
         }),
         getSingleBook: builder.query({
             query: (id: string) => `/get-book/${id}`,

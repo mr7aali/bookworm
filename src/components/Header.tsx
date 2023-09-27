@@ -91,8 +91,8 @@ const Header = () => {
               {nav.text}
             </Link>
           ))}
-          <Link to={"/"} className={`${linkStyle} lg:block hidden`}>
-            Others
+          <Link to={"/make-read"} className={`${linkStyle} lg:block hidden`}>
+            MakeRead
           </Link>
         </div>
 

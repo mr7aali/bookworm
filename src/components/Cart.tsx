@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IBook } from "../types/book";
 import "./styles/cart.css";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
@@ -18,11 +18,15 @@ const Cart = ({ book }: IProps) => {
   const [makeRead, setmakeRead] = useState(false);
   const email = useAppSelector((state) => state.user.user.email) ?? "";
   const [updateBook] = useUpdateBookMutation();
-
-  console.log(email);
-  console.log(book.wishList.includes(email));
+  const navigate = useNavigate();
+  console.log(book);
 
   const handleWishLisst = async () => {
+    if(!email){
+      navigate("/signin");
+      toast.error("Please login!")
+      return;
+    }
     const updateWishList = [...book.wishList, email];
     const data = {
       wishList: updateWishList as string[],
@@ -40,6 +44,11 @@ const Cart = ({ book }: IProps) => {
     }
   };
   const handleMakeRead = async () => {
+    if(!email){
+      navigate("/signin");
+      toast.error("Please login!")
+      return;
+    }
     const updateMakeRead = [...book.markAsReadList, email];
     const data = {
       markAsReadList: updateMakeRead as string[],

@@ -7,6 +7,8 @@ import AllBook from "../pages/AllBook";
 import AddBook from "../components/AddBook";
 import Details from "../components/Details";
 import Wishlist from "../pages/Wishlist";
+import MakeRead from "../pages/MakeRead";
+import PrivetRout from "../components/PrivetRoute";
 
 const routes = createBrowserRouter([
   {
@@ -35,11 +37,15 @@ const routes = createBrowserRouter([
       },
       {
         path:"/addbook",
-        element:<AddBook/>
+        element: <PrivetRout><AddBook/></PrivetRout>
       },
       {
         path:"/wishlist",
         element:<Wishlist/>
+      },
+      {
+        path:"/make-read",
+        element:<MakeRead/>
       },
     ],
   },

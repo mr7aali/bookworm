@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IPostResponse } from "../types/InterfaceResponse";
 import { UpdateComponentProps } from "./helpers/componentPropse.type";
+import { useAppSelector } from "../redux/hook";
 const style = {
   position: "absolute",
   top: "50%",
@@ -26,11 +27,18 @@ const UpdateModal: React.FC<UpdateComponentProps> = ({
   setOpen,
 }) => {
   const { handleSubmit, register } = useForm<IBookPostData>();
-
+  const email = useAppSelector((state) => state.user.user.email);
   const [updateBook] = useUpdateBookMutation();
-  
+
+  console.log(book?.email, email);
+
   const onSubmit = async (data: IBookPostData) => {
-    console.log(data);
+    if (!(book?.email === email)) {
+      toast.error("You are not authorize to update!");
+      setOpen(!open);
+      return;
+    }
+
     const result: IPostResponse = await updateBook({
       id: book?._id,
       data: data,

@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import UpdateModal from "./UpdateModal";
 import { useState } from "react";
 import Review from "./Review";
+import { IPostResponse } from "../types/InterfaceResponse";
 
 type MyData = {
   data: IBook;
@@ -33,6 +34,7 @@ export default function Details() {
   const id = path.split("/")[2];
   const email = useAppSelector((state) => state.user.user.email);
   const { data } = useGetSingleBookQuery(id) as MyQueryResult;
+
   const option = {
     id: id,
     email: email as string,
@@ -40,17 +42,25 @@ export default function Details() {
   const [deletePost] = useDeleteBookMutation();
 
   const handleDelete = async () => {
-    const r = await deletePost(option);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if ("data" in r && !r?.data?.success) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      toast.error(r?.data?.message);
+    if ( !confirm("Aye you sure to delete?") === true) {
       return;
     }
-    toast.success("Book deleted successfully");
-    navigate("/");
+    if (!(data?.data?.email === email)) {
+      toast.error("You are not authorize to delete!");
+      return;
+    }
+    const result: IPostResponse = await deletePost(option);
+
+    console.log(result);
+
+    if ("data" in result) {
+      if (result.data.success) {
+        toast.success("Book deleted successfully");
+        navigate("/");
+      }
+
+      return;
+    }
   };
 
   return (

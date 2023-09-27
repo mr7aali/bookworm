@@ -10,7 +10,7 @@ import { IPostResponse } from "../types/InterfaceResponse";
 const AddBook = () => {
   const { reset, handleSubmit, register } = useForm<IBookPostData>();
   const email = useAppSelector((state) => state.user.user.email);
-  console.log(email);
+
   const [postBook] = usePostBookMutation();
 
   const onSubmit = async (data: IBookPostData) => {
