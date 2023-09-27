@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Cart from "../components/Cart";
-import { useGetAllBooksQuery, useGetBooksQuery } from "../redux/api/apiSlice";
+import {  useGetBooksQuery } from "../redux/api/apiSlice";
 import { IBook } from "../types/book";
 import { BsSearch } from "react-icons/bs";
 import { MyQueryResult } from "./interface";
